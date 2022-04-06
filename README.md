@@ -8,11 +8,11 @@ This project's main purpose is to view the CAN Bus traffic in real time, replay 
 
 ## How to get started
 1. Install Kali Linux on a VM of your choice 
-2. Clone repo onto your machine
+2. Clone repo onto your kali machine
  ```
  git clone https://github.com/NoahTheGr8/CAN-Bus-Visualizer-Sub-System-Prototype.git
  ```
-3. Run the following commands on the terminal
+3. Update and Upgrade System then run the program
 ```
 sudo apt update
 sudo apt upgrade
