@@ -49,6 +49,7 @@ table.heading('#2', text="Node Data")
 table.insert("", 'end', values=(CANBusData['nodeID'], CANBusData['CANName'], CANBusData['nodeData']))
 root.mainloop()
 
+
 # I tried to use a internal database.
 
 # # Crate Database
