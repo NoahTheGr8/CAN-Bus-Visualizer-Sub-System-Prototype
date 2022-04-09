@@ -18,10 +18,10 @@ for line in f:
     aa = dump[0]
     bb = dump[1]
     cc = dump[2]
-
     one.append(aa)
     two.append(bb)
     three.append(cc)
+
 # Create dictionary with lists
 CANBusData = {'nodeID': one, 'CANName': two, 'nodeData': three}
 
@@ -45,8 +45,9 @@ table.heading('#2', text="Node Data")
 # Insert dictionary into table
 
 # todo print data vertically
+for key in CANBusData.items():
+    table.insert("",'end', values=(CANBusData['nodeID'], CANBusData['CANName'], CANBusData['nodeData']))
 
-table.insert("", 'end', values=(CANBusData['nodeID'], CANBusData['CANName'], CANBusData['nodeData']))
 root.mainloop()
 
 
