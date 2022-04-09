@@ -8,9 +8,9 @@ file = open('small_sample.txt', 'r')
 f = file.readlines()
 
 # Create lists
-one = []
-two = []
-three = []
+time_stamp = []
+can0 = []
+packet = []
 
 # Save text file into lists
 for line in f:
@@ -18,15 +18,9 @@ for line in f:
     aa = dump[0]
     bb = dump[1]
     cc = dump[2]
-    one.append(aa)
-    two.append(bb)
-    three.append(cc)
-
-# Create dictionary with lists
-CANBusData = {'nodeID': one, 'CANName': two, 'nodeData': three}
-
-# dataList.append(line.strip())
-# print(CANBusData)
+    time_stamp.append(aa)
+    can0.append(bb)
+    packet.append(cc)
 
 # Gui
 root = Tk()
@@ -38,15 +32,15 @@ table = ttk.Treeview(columns=('nodeID', 'CANName', 'nodeData'))
 table.pack()
 
 # Create names in columns
-table.heading('#0', text="Node ID")
+table.heading('#0', text="Time Stamp")
 table.heading('#1', text="CAN Name")
 table.heading('#2', text="Node Data")
 
 # Insert dictionary into table
 
 # todo print data vertically
-for key in CANBusData.items():
-    table.insert("",'end', values=(CANBusData['nodeID'], CANBusData['CANName'], CANBusData['nodeData']))
+for i in range(len(time_stamp)):
+    table.insert("", "end", values=(time_stamp[i], can0[i], packet[i]))
 
 root.mainloop()
 
