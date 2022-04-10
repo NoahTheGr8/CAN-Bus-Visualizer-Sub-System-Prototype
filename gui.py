@@ -4,7 +4,7 @@ from tkinter import ttk
 import sqlite3
 
 # Open and read CAN bus data dump .txt format
-file = open('small_sample.txt', 'r')
+file = open('data.txt', 'r')
 f = file.readlines()
 
 # Create lists
@@ -22,7 +22,7 @@ for line in f:
 # Gui
 root = Tk()
 root.title('CAN Bus Visualizer')
-root.geometry("1000x200")
+root.geometry("1000x2000")
 
 # Create table
 table = ttk.Treeview(columns=('nodeID', 'CANName', 'nodeData'))
