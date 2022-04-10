@@ -1,8 +1,6 @@
 from tkinter import *
 from tkinter import ttk
-
 import can
-
 
 class GUI(object):
     def __init__(self, title, size):
@@ -11,8 +9,22 @@ class GUI(object):
         self.window.title(title)
         self.window.geometry(size)
 
-        # Create table and columns
-        self.table = ttk.Treeview(columns=('Timestamp', 'ID', 'DL', 'Channel'))
+        # Create frame
+        self.frame = Frame(self.window)
+        self.frame.pack(pady=15)
+
+        # Create table
+        self.table = ttk.Treeview(master=self.frame, columns=('Timestamp', 'ID', 'DL', 'Channel'), show='headings')
+        self.table.pack(side=LEFT)
+
+        # Create scrollbar
+        self.scrollbar = Scrollbar(master=self.frame, orient=VERTICAL)
+        self.scrollbar.pack(side=RIGHT, fill=Y)
+
+        self.table.configure(yscrollcommand=self.scrollbar.set)
+        self.scrollbar.configure(command=self.table.yview)
+
+        # Create columns
         self.table.column('#0', width=0, stretch=NO)
         self.table.column('#1', anchor=NW)
         self.table.column('#2', anchor=NW)
@@ -25,8 +37,6 @@ class GUI(object):
         self.table.heading('#2', text='ID', anchor=CENTER)
         self.table.heading('#3', text='DL', anchor=CENTER)
         self.table.heading('#4', text='Channel', anchor=CENTER)
-
-        self.table.pack()
 
     def add(self, msg: can.Message):
         self.table.insert(parent='', index='end', values=(msg.timestamp, msg.arbitration_id, msg.dlc, msg.channel))
@@ -41,14 +51,12 @@ class GUI(object):
 
         self.window.after(ms, self.messageCallback, ms, function)
 
-
 class TrafficDisplayer(object):
     def __init__(self, ms=None, function=None):
         self.gui = GUI('CAN Bus Visualizer', '1000x200')
         if function is not None:
             self.gui.messageCallback(ms, function)
         self.gui.start()
-
 
 if __name__ == '__main__':
     disp = TrafficDisplayer()
