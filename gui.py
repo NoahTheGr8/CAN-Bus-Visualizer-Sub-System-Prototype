@@ -15,12 +15,9 @@ packet = []
 # Save text file into lists
 for line in f:
     dump = line.split()
-    aa = dump[0]
-    bb = dump[1]
-    cc = dump[2]
-    time_stamp.append(aa)
-    can0.append(bb)
-    packet.append(cc)
+    time_stamp.append(dump[0]) #append the time stamp
+    can0.append(dump[1]) #append can0
+    packet.append(dump[2]) #append packets
 
 # Gui
 root = Tk()
