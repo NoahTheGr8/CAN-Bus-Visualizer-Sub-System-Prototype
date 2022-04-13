@@ -9,12 +9,12 @@ def receivePacket():
     if msg is not None:
         now = datetime.now()
         date_string = now.strftime('on %B %d at %H:%M:%S')
-        print('Message Received %s' %date_string)
+        print('Message Received %s \n' %date_string, msg)
 
     return msg
 
 def run():
-    traffic = TrafficDisplayer(1000, receivePacket)
+    traffic = TrafficDisplayer(ms=1, function=receivePacket)
 
 if __name__ == '__main__':
     run()
