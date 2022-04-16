@@ -20,7 +20,7 @@ class GUI(object):
         self.table.pack(side=LEFT)
 
         # Create scrollbar
-        self.scrollbar = ttk.Scrollbar(master=self.frame, orient=VERTICAL)
+        self.scrollbar = Scrollbar(master=self.frame, orient=VERTICAL)
         self.scrollbar.pack(side=RIGHT, fill=Y)
 
         self.table.configure(yscrollcommand=self.scrollbar.set)
@@ -42,14 +42,19 @@ class GUI(object):
         self.table.heading('#4', text='Data', anchor=CENTER)
         self.table.heading('#5', text='Channel', anchor=CENTER)
 
+    def selected_item(self):
+        current_item = self.table.focus()
+        if current_item is None:
+            return 0
+        else:
+            return 1
+
     def add(self, msg: can.Message):
         data = '0x'
         for index in range(0, min(msg.dlc, len(msg.data))):
             data += (f"{msg.data[index]:02x}")
-        # treeview does not support autoscroll so I had to insert the new element at the first row
-        self.table.insert(parent='', index=0, values=(msg.timestamp, msg.arbitration_id, msg.dlc, data, msg.channel))
-        #
-        time.sleep(2)
+        self.table.insert(parent='', index='end', values=(msg.timestamp, msg.arbitration_id, msg.dlc, data, msg.channel))
+        #time.sleep(2)
 
     def start(self):
         self.window.mainloop()
@@ -58,11 +63,21 @@ class GUI(object):
         msg: can.Message = function()
         if msg is not None:
             self.add(msg)
+            #to possible stop trafic
+            #Here
+            current_item = self.table.focus()
+            if len(current_item) <= 1:
+                print("no selection")
+                self.table.yview_moveto(1)
+            else:
+                print("item is selected")
+                self.table.yview_moveto(0)
+
 
         self.window.after(ms, self.messageCallback, ms, function)
 
 class TrafficDisplayer(object):
-    def __init__(self, size='1150x200', ms=None, function=None):
+    def __init__(self, size='750x400', ms=None, function=None):
         self.gui = GUI('CAN Bus Visualizer', size)
         if function is not None:
             self.gui.messageCallback(ms, function)

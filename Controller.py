@@ -18,8 +18,6 @@ def run():
     traffic = TrafficDisplayer(ms=1, function=receivePacket)
 
 if __name__ == '__main__':
-    p1 = subprocess.run('./vcan_s.sh')
-    p2 = subprocess.run('./send_s.sh')
     run()
 
 
