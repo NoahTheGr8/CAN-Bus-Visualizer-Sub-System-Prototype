@@ -13,14 +13,21 @@ class GUI(object):
 
         # Create frame
         self.frame = Frame(self.window)
-        self.frame.pack(pady=15)
+        self.frame.pack(#padx=14, #padx and pady set the distance between borders
+                        #pady=14,
+                        side=TOP) # dysplayed on the center
 
         # Create table
-        self.table = ttk.Treeview(master=self.frame, columns=('Timestamp', 'ID', 'DL', 'DATA', 'Channel'), show='headings', height=15)
+        self.table = ttk.Treeview(master=self.frame,
+                                  columns=('Timestamp', 'ID', 'DL', 'DATA', 'Channel'),
+                                  show='headings',
+                                  height=15,  #heigth to set the number of columns
+                                  )
         self.table.pack(side=LEFT)
 
         # Create scrollbar
-        self.scrollbar = Scrollbar(master=self.frame, orient=VERTICAL)
+        self.scrollbar = ttk.Scrollbar(master=self.frame,
+                                       orient=VERTICAL)
         self.scrollbar.pack(side=RIGHT, fill=Y)
 
         self.table.configure(yscrollcommand=self.scrollbar.set)
@@ -53,8 +60,10 @@ class GUI(object):
         data = '0x'
         for index in range(0, min(msg.dlc, len(msg.data))):
             data += (f"{msg.data[index]:02x}")
-        self.table.insert(parent='', index='end', values=(msg.timestamp, msg.arbitration_id, msg.dlc, data, msg.channel))
-        #time.sleep(2)
+        self.table.insert(parent='',
+                          index='end',
+                          values=(msg.timestamp, msg.arbitration_id, msg.dlc, data, msg.channel))
+        #time.sleep(0.5) #to contol the flow of the packets
 
     def start(self):
         self.window.mainloop()
@@ -63,15 +72,8 @@ class GUI(object):
         msg: can.Message = function()
         if msg is not None:
             self.add(msg)
-            #to possible stop trafic
-            #Here
-            current_item = self.table.focus()
-            if len(current_item) <= 1:
-                print("no selection")
-                self.table.yview_moveto(1)
-            else:
-                print("item is selected")
-                self.table.yview_moveto(0)
+            self.table.yview_moveto(1)  # Allows autoscroll
+
 
 
         self.window.after(ms, self.messageCallback, ms, function)

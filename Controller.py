@@ -17,7 +17,11 @@ def receivePacket():
 def run():
     traffic = TrafficDisplayer(ms=1, function=receivePacket)
 
+
+
 if __name__ == '__main__':
+    p = subprocess.Popen(
+            '/home/kali/PycharmProjects/CAN-Bus-Visualizer-Sub-System-Prototype/Scripts/controls_s.sh')
     run()
 
 
