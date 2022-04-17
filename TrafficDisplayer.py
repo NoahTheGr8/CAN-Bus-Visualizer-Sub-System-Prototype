@@ -98,7 +98,7 @@ class GUI(object):
             self.table.yview_moveto(1)  # Allows autoscroll
 
         #The 1000 below specifies that 1000 milliseconds = 1 sec will pass until the next invocation of callback which also means 1s until next packet is read
-        if len(self.allMessages) < 16: #for sake of demo - we will only show 25 packets
+        if len(self.allMessages) < 16: #for sake of demo - we will only show 16 packets
             self.window.after(ms, self.messageCallback, 1000, function)
 
     def openMenu(self, e):
