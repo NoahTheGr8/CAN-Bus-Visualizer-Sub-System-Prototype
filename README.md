@@ -17,42 +17,42 @@ We learned that...
 * You follow these instructions **EXACTLY** as they are (scripts won't work since they depend on certain directory calls)
 
 ## How to Get Started
-5. Open Kali Linux
-6. Open a terminal/command prompt
-7. Download the dependencies
+1. Open Kali Linux
+2. Open a terminal/command prompt
+3. Download the dependencies
 ```
 sudo apt install can-utils
 sudo apt install libsdl2-dev libsdl2-image-dev -y
 ```
-6. Navigate to the desktop
+4. Navigate to the desktop
 ```
 cd ~/Desktop
 ```
-8. Clone this repository to the **Desktop**
+5. Clone this repository to the **Desktop**
 ```
 git clone https://github.com/NoahTheGr8/CAN-Bus-Visualizer-Sub-System-Prototype.git
 ```
-8. Create another folder called "w_can" on the **Desktop**
+6. Create another folder called "w_can" on the **Desktop**
 ```
 mkdir w_can
 ```
-9. Navigate into the folder w_can 
+7. Navigate into the folder w_can 
 ```
 cd ~/Desktop/w_can
 ```
-10. Clone the simulator repository into the folder **w_can**
+8. Clone the simulator repository into the folder **w_can**
 ```
 git clone https://github.com/zombieCraig/ICSim.git
 ```
-11. Navigate to folder where the CAN Bus Visualizer System is
+9. Navigate to folder where the CAN Bus Visualizer System is
 ```
 cd ../CAN-Bus-Visualizer-Sub-System-Prototype
 ```
-12. Start the program using the below command - 
+10. Start the program using the below command - 
 ```
 python3 Controller.py
 ```
-13. Enjoy (hopefully) :)
+11. Enjoy (hopefully) :)
 
 ## How to use the prototype
 * look at it and see all packets being sent on the CAN Bus
