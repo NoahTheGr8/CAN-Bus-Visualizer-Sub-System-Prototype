@@ -2,12 +2,26 @@ import tkinter
 from tkinter import *
 from tkinter import ttk
 import can
+import signal
 import sys
+import os
 
 class GUI(object):
-    def __init__(self, title, size):
-        self.allMessages = [] #This will contain all the messages from the entire session
+    def __init__(self, title, size, can_bus, p1, p2):
 
+
+        '''
+        For soft 2 - relocate these attributes to another class. This is only here for making prototype work within deadline
+
+        :param can_bus: - the bus object
+        :param p1: - the speedometer UI process
+        :param p2: - the controller UI process
+        :param function: - the function that recieves packets
+        '''
+        self.temp_traffic_storage = [] #This holds all messages for the session
+        self.can_bus = can_bus #this is the can bus that has been passed from Controller.py
+        self.p1 = p1 #this is the proccess thats displaying the speedometer
+        self.p2 = p2 #this is the process thats displaying the controller
 
         # Create window
         self.window = Tk()
@@ -71,11 +85,16 @@ class GUI(object):
     #packet_index is the index of the packet in reference to the table on the Traffic View.
     def replayPacket(self, packet_index):
         #Get tree selected index
-        self.add(self.allMessages[packet_index]) #gets the packet from allMessages (basically "Traffic Temp Storage") and sends it back to the CAN Bus
+        poi = self.temp_traffic_storage[packet_index] #this is the packet of interest they right clicked on
+        self.can_bus.send(poi) #transmit the packet back to the CAN Bus
+        self.add(poi) #add the packet to the traffic view
+        self.temp_traffic_storage.append(poi) #add the packet to the traffic temporary file
 
     #stops the session and closes the UI
     def stopSession(self):
-        sys.exit(0)
+        os.killpg(os.getpgid(self.p1.pid), signal.SIGTERM) #close the speedometer UI
+        os.killpg(os.getpgid(self.p2.pid), signal.SIGTERM) #close the controlller UI
+        sys.exit(0) #close the traffic view
 
     def add(self, msg: can.Message):
         data = '0x'
@@ -93,12 +112,12 @@ class GUI(object):
     def messageCallback(self, ms, function):
         msg: can.Message = function()
         if msg is not None:
-            self.allMessages.append(msg)
+            self.temp_traffic_storage.append(msg)
             self.add(msg)
             self.table.yview_moveto(1)  # Allows autoscroll
 
         #The 1000 below specifies that 1000 milliseconds = 1 sec will pass until the next invocation of callback which also means 1s until next packet is read
-        if len(self.allMessages) < 16: #for sake of demo - we will only show 16 packets
+        if len(self.temp_traffic_storage) < 25: #for sake of demo - we will only show x packets
             self.window.after(ms, self.messageCallback, 1000, function)
 
     def openMenu(self, e):
@@ -162,10 +181,10 @@ class GUI(object):
 
 
 class TrafficDisplayer(object):
-    def __init__(self, size='750x400', ms=None, function=None):
-        self.gui = GUI('CAN Bus Visualizer', size)
+    def __init__(self, canbus=None, size='750x400', ms=None, function=None, p1=None, p2=None):
+        self.gui = GUI('CAN Bus Visualizer', size, canbus, p1, p2)
         if function is not None:
-            self.gui.messageCallback(ms, function)
+            self.gui.messageCallback(ms, function) #pass the can bus as well
         self.gui.start()
 
 
