@@ -13,7 +13,6 @@ We learned that...
 ## Prerequisites/Assumptions
 * Kali Linux 
 * Python 3.9+
-* "kali" is your password for your kali linux (scripts won't work if it's not "kali")
 * You follow these instructions **EXACTLY** as they are (scripts won't work since they depend on certain directory calls)
 
 ## How to Get Started
@@ -55,16 +54,17 @@ cd ../CAN-Bus-Visualizer-Sub-System-Prototype
 cd Scripts
 ./vcan_s.sh
 ```
-11. Go back a directory and start the program using the below commands - 
+11. Enter your password (probably "kali")
+12. Go back a directory and start the program using the below commands below - 
 ```
 cd ..
 python3 Controller.py
 ```
-11. Enjoy (hopefully) :)
+13. Enjoy (hopefully) :)
 
 ## How to use the prototype
-* look at it and see all packets being sent on the CAN Bus
-* Right click a packet (represented as a row) and choose to edit or replay (only functionalites that are completed)
+* Look at it and see all packets being sent on the CAN Bus
+* Right-click a packet (represented as a row) and choose to edit or replay (only functionalites that are completed)
 * Stop the session using the button "Stop Session"
 
 ## Possible Reasons the Application is not Working
@@ -76,6 +76,5 @@ chmod +x controls_s.sh
 chmod +x icsim_s.sh
 ```
 * You didn't clone the repos to their intended locations
-* Your password is not "kali"
+* Your password was not entered correctly on step 11
 * You didn't download the dependencies
-
