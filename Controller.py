@@ -16,8 +16,8 @@ def receivePacket():
 
     return msg
 
-def run():
-    traffic = TrafficDisplayer(ms=1, function=receivePacket)
+def run(speedometer_proc, controller_proc):
+    traffic = TrafficDisplayer(ms=1, function=receivePacket, canbus=bus, p1= speedometer_proc, p2=controller_proc)
 
 if __name__ == '__main__':
     # below is automating commands that analyst need not worry about
@@ -26,8 +26,8 @@ if __name__ == '__main__':
     script_dir = curr_dir + '/Scripts' #directory with all the scripts
 
     #This automates setting up the vcan interface - can possibly be used in software 2
-    #command1 = './vcan_s.sh'
-    #p1 = subprocess.run(command1, shell=True, cwd = script_dir , capture_output=False)
+    #command0 = './vcan_s.sh'
+    #p0 = subprocess.run(command1, shell=True, cwd = script_dir , capture_output=False)
 
     #Step 1. Nav to ICSim folder and start up the vcan0 (speedometer) - includes ./icsim vcan0
     command1 = './icsim_s.sh'
@@ -38,4 +38,4 @@ if __name__ == '__main__':
     p2 = subprocess.Popen(command2, shell=True, cwd=script_dir)
 
     # run() starts the GUI and the reading of the packets
-    run()
+    run(p1, p2)
