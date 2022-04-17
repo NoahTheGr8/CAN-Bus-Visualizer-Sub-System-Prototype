@@ -8,7 +8,15 @@ This project's main purpose is to view the CAN Bus traffic in real time, replay 
 The status of the implementation...
 
 ## What we learned
-We learned that...
+We learned various things after taking on this prototype project. We learned -
+* How to communicate when collaborating on a coding project
+* How to use git-hub
+* How to use git
+* How to use the documentation we made previously to help us in achieving the requirements
+
+Also, we asked ourselves some important questions that we had not considered until we started working on the code such as "What happens after editing a packet?" or "What should the UI present about a packet?". Although we had documentations on most of the scenarios, it was only in the coding portion that we could consider new things. 
+
+Overall, the most important things we learned was using the git and git-hub software to meet the technical prototype requirements as well as new perspectives to consider for the final implementation. 
 
 ## Prerequisites/Assumptions
 * Kali Linux 
