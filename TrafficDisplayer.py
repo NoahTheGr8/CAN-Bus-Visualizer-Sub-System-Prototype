@@ -2,12 +2,12 @@ import tkinter
 from tkinter import *
 from tkinter import ttk
 import can
-import time
 import sys
 
 class GUI(object):
     def __init__(self, title, size):
         self.allMessages = [] #This will contain all the messages from the entire session
+
 
         # Create window
         self.window = Tk()
@@ -70,20 +70,12 @@ class GUI(object):
 
     #packet_index is the index of the packet in reference to the table on the Traffic View.
     def replayPacket(self, packet_index):
-
         #Get tree selected index
         self.add(self.allMessages[packet_index]) #gets the packet from allMessages (basically "Traffic Temp Storage") and sends it back to the CAN Bus
 
     #stops the session and closes the UI
     def stopSession(self):
         sys.exit(0)
-
-    def selected_item(self):
-        current_item = self.table.focus()
-        if current_item is None:
-            return 0
-        else:
-            return 1
 
     def add(self, msg: can.Message):
         data = '0x'
