@@ -4,13 +4,13 @@ This repository contains a technical prototype for a sub-system within the CAN-B
 ## About this program's functionality
 This project's main purpose is to view the CAN Bus traffic in real time, replay packets, and edit packets of interest by the analyst.
 
-##Status of the implementation
+## Status of the implementation
 The status of the implementation...
 
-##What we learned
+## What we learned
 We learned that...
 
-##Prerequisites/Assumptions
+## Prerequisites/Assumptions
 * Kali Linux 
 * Python 3.9+
 * "kali" is your password for your kali linux (scripts won't work if it's not "kali")
