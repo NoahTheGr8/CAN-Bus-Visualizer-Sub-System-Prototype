@@ -3,9 +3,12 @@ from tkinter import *
 from tkinter import ttk
 import can
 import time
+import sys
 
 class GUI(object):
     def __init__(self, title, size):
+        self.allMessages = [] #This will contain all the messages from the entire session
+
         # Create window
         self.window = Tk()
         self.window.title(title)
@@ -15,7 +18,7 @@ class GUI(object):
         self.menu = Menu(self.window, tearoff=False)
         self.menu.add_command(label='Save Packet')
         self.menu.add_command(label='Edit Packet', command=lambda: self.openWindow(title='Edit Packet', size='500x115'))
-        self.menu.add_command(label='Replay Packet')
+        self.menu.add_command(label='Replay Packet', command = lambda: self.replayPacket(self.table.index(self.table.selection())))
         self.menu.add_command(label='Annotate Packet')
         self.menu.add_command(label='Delete Packet')
 
@@ -61,6 +64,20 @@ class GUI(object):
         self.table.heading('#4', text='Data', anchor=CENTER)
         self.table.heading('#5', text='Channel', anchor=CENTER)
 
+        #added a button to stop session - Closes main UI
+        stop_button = Button(self.window, text='Stop Sesssion', command= lambda: self.stopSession())
+        stop_button.pack(side=BOTTOM)
+
+    #packet_index is the index of the packet in reference to the table on the Traffic View.
+    def replayPacket(self, packet_index):
+
+        #Get tree selected index
+        self.add(self.allMessages[packet_index]) #gets the packet from allMessages (basically "Traffic Temp Storage") and sends it back to the CAN Bus
+
+    #stops the session and closes the UI
+    def stopSession(self):
+        sys.exit(0)
+
     def selected_item(self):
         current_item = self.table.focus()
         if current_item is None:
@@ -75,7 +92,8 @@ class GUI(object):
         self.table.insert(parent='',
                           index='end',
                           values=(msg.timestamp, msg.arbitration_id, msg.dlc, data, msg.channel))
-        #time.sleep(0.5) #to contol the flow of the packets
+
+        #time.sleep(0.9) #to contol the flow of the packets
 
     def start(self):
         self.window.mainloop()
@@ -83,12 +101,13 @@ class GUI(object):
     def messageCallback(self, ms, function):
         msg: can.Message = function()
         if msg is not None:
+            self.allMessages.append(msg)
             self.add(msg)
             self.table.yview_moveto(1)  # Allows autoscroll
 
-
-
-        self.window.after(ms, self.messageCallback, ms, function)
+        #The 1000 below specifies that 1000 milliseconds = 1 sec will pass until the next invocation of callback which also means 1s until next packet is read
+        if len(self.allMessages) < 16: #for sake of demo - we will only show 25 packets
+            self.window.after(ms, self.messageCallback, 1000, function)
 
     def openMenu(self, e):
         self.menu.tk_popup(e.x_root, e.y_root)
