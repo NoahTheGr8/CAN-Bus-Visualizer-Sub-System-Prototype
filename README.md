@@ -23,6 +23,8 @@ We learned that...
 ```
 sudo apt install can-utils
 sudo apt install libsdl2-dev libsdl2-image-dev -y
+sudo apt install python3-pip
+pip install python-can
 ```
 4. Navigate to the desktop
 ```
@@ -48,8 +50,14 @@ git clone https://github.com/zombieCraig/ICSim.git
 ```
 cd ../CAN-Bus-Visualizer-Sub-System-Prototype
 ```
-10. Start the program using the below command - 
+10. Go into the scripts directory and load the virtual CAN module, set up virtual interface, and ensure its up and running
 ```
+cd Scripts
+./vcan_s.sh
+```
+11. Go back a directory and start the program using the below commands - 
+```
+cd ..
 python3 Controller.py
 ```
 11. Enjoy (hopefully) :)
