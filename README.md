@@ -5,7 +5,18 @@ This repository contains a technical prototype for a sub-system within the CAN-B
 This project's main purpose is to view the CAN Bus traffic in real time, replay packets, and edit packets of interest by the analyst.
 
 ## Status of the implementation
-The status of the implementation...
+We implemented various functionalities based on the requeriments of the customer.
+
+* Implemented a GUI to vizualize the packets.
+* Implemented functionalities for edit and replay packets.
+* Implemented the use of scripts to automate processes that start the virtual CAN and simulator.
+
+## Missing functionalities
+* Decoding of the packets
+* Allowing the Analyst to Manage Project
+* Allowing the Analyst to Manage CAN Traffic except displaying traffic, editing packets and replaying packets
+* Allowing the Analyst to Manage a CAN Map
+
 
 ## What we learned
 We learned various things after taking on this prototype project. We learned -
@@ -18,12 +29,12 @@ Also, we asked ourselves some important questions that we had not considered unt
 
 Overall, the most important things we learned was using the git and git-hub software to meet the technical prototype requirements as well as new perspectives to consider for the final implementation. 
 
-## Prerequisites/Assumptions
+## Prerequisites/Assumptions to using this program
 * Kali Linux 
 * Python 3.9+
 * You follow these instructions **EXACTLY** as they are (scripts won't work since they depend on certain directory calls)
 
-## How to Get Started
+## How to start application
 1. Open Kali Linux
 2. Open a terminal/command prompt
 3. Download the dependencies
@@ -70,10 +81,10 @@ python3 Controller.py
 ```
 13. Enjoy (hopefully) :)
 
-## How to use the prototype
+## How to use the program 
 * Look at it and see all packets being sent on the CAN Bus
-* Right-click a packet (represented as a row) and choose to edit or replay (only functionalites that are completed)
-* Stop the session using the button "Stop Session"
+* Right-click a packet (represented as a row) and choose to edit, view previous versions of a packet, or replay (only functionalites that are completed)
+* Stop the session using the button "Stop Session to close program and all the UI's it created"
 
 ## Possible Reasons the Application is not Working
 * The scripts that are in the repo need to become executables. To fix this you can run these commands
